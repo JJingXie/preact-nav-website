@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PreAct-Nav | Agentic Reasoning Before Action for Urban Navigation</title>
+  <meta name="description" content="PreAct-Nav equips frozen navigation policies with navigation memory and action-conditioned visual predictions to reason before acting.">
+  <meta name="theme-color" content="#ffffff">
+  <meta property="og:title" content="PreAct-Nav: Agentic Reasoning Before Action for Urban Navigation">
+  <meta property="og:description" content="Navigation memory and predicted visual cues guide a frozen policy through long-horizon urban navigation.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jjingxie.github.io/preact-nav-website/">
+  <link rel="canonical" href="https://jjingxie.github.io/preact-nav-website/">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231a3356'/%3E%3Cpath d='M8 24V9h8a5 5 0 0 1 0 10h-3' fill='none' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='23' cy='24' r='3' fill='%237fbcef'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js" defer></script>
+  <script src="results-data.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#overview">Skip to content</a>
+  <header class="site-header"><div class="header-inner">
+    <a class="wordmark" href="#top" aria-label="PreAct-Nav home">PreAct<span>-Nav</span></a>
+    <nav aria-label="Page navigation"><a href="#overview">Overview</a><a href="#examples">Examples</a><a href="#method">Method</a><a href="#results">Results</a><a href="#citation">BibTeX</a></nav>
+  </div></header>
+  <main id="top">
+    <section class="hero wrap" aria-labelledby="paper-title">
+      <h1 id="paper-title"><span class="project-name">PreAct<span>-Nav</span></span><span class="paper-title">Agentic Reasoning Before Action<br class="desktop-break"> for Urban Navigation</span></h1>
+      <div class="authors" aria-label="Authors in publication order">
+        <span>Jing Xie<sup>1,†</sup></span><span>Shouwei Ruan<sup>2,†</sup></span><span>Yubin Wang<sup>3,‡</sup></span><span>Yuxiang Zhang<sup>4</sup></span><span>Junwei Yang<sup>5</sup></span><span>Songchang Jin<sup>6</sup></span><span>Dianxi Shi<sup>6,*</sup></span>
+      </div>
+      <div class="affiliations">
+        <p><sup>1</sup> MoE Key Lab of Artificial Intelligence, Institute of AI, School of Computer Science,<br class="desktop-break"> Shanghai Jiao Tong University, Shanghai, China</p>
+        <div><span><sup>2</sup> Beihang University, Beijing, China</span><span><sup>3</sup> The Hong Kong University of Science and Technology, Hong Kong, China</span></div>
+        <div><span><sup>4</sup> Tsinghua University, Beijing, China</span><span><sup>5</sup> University of Cambridge, Cambridge, UK</span></div>
+        <p><sup>6</sup> Intelligent Game and Decision Lab (IGDL), Beijing, China</p>
+      </div>
+      <p class="author-notes"><span><sup>†</sup> Equal contribution</span><span><sup>‡</sup> Project leader</span><span><sup>*</sup> Corresponding author</span></p>
+      <div class="resources" aria-label="Project resources">
+        <button class="resource" data-resource="arxiv" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 2h7l3 3v13H5zM12 2v4h3M8 10h4M8 13h4"/></svg>arXiv <span>Soon</span></button>
+        <button class="resource" data-resource="github" disabled><svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 6-4 4 4 4m6-8 4 4-4 4m-2-11-2 14"/></svg>GitHub <span>Soon</span></button>
+      </div>
+    </section>
+    <section class="overview section wrap" id="overview" aria-labelledby="overview-title">
+      <h2 id="overview-title">Overview</h2>
+      <p class="lead">PreAct-Nav equips a frozen navigation policy with a reasoning loop that considers the consequences of an action before executing it. Navigation Memory maintains the current subgoal and observed experience; a Predictive Sandbox provides future visual cues when they can resolve an open question.</p>
+      <figure class="paper-figure"><a href="assets/concept.webp" target="_blank" rel="noopener" aria-label="Open the concept figure at full size"><img src="assets/concept.webp" width="2600" height="872" alt="PreAct-Nav combines persistent medium-horizon subgoals with action-conditioned visual predictions to connect local decisions to a distant goal." fetchpriority="high"></a><figcaption>Persistent subgoals connect local decisions to the destination. Visual predictions inform action review; real observations update memory.</figcaption></figure>
+    </section>
+
+    <section class="cases-section section wrap" id="examples" aria-labelledby="examples-title">
+      <h2 id="examples-title">Navigation examples</h2>
+      <p class="section-copy">Predicted views can reveal why a proposed movement should change. After execution, real observations determine whether the current subgoal still holds.</p>
+      <div class="case-tabs" role="group" aria-label="Navigation example">
+        <button data-case="reasoning" aria-pressed="true">Action revision &amp; memory</button><button data-case="robot" aria-pressed="false">Real-robot navigation</button>
+      </div>
+      <div id="case-reasoning" class="case-panel">
+        <figure class="paper-figure"><a href="assets/reasoning-cases.webp" target="_blank" rel="noopener" aria-label="Open action revision and memory cases at full size"><img src="assets/reasoning-cases.webp" width="2600" height="1036" loading="lazy" alt="Two navigation cases: visual predictions prompt a revision from a storefront toward the sidewalk; real feedback about pedestrians leads to a new subgoal."></a><figcaption>A storefront-facing prediction prompts a rightward revision toward the sidewalk. In a second case, pedestrians remain in the passage, so memory updates the objective to passing on the right.</figcaption></figure>
+      </div>
+      <div id="case-robot" class="case-panel" hidden>
+        <div class="robot-layout"><figure class="paper-figure"><a href="assets/real-world.webp" target="_blank" rel="noopener" aria-label="Open the real-robot navigation figure at full size"><img src="assets/real-world.webp" width="2600" height="2366" loading="lazy" alt="An outdoor wheeled robot follows the building exterior toward a yellow food-delivery locker, using predictions to revise its action and real camera feedback to update its subgoal."></a></figure><div class="robot-copy"><h3>Following the exterior walkway</h3><p>The robot’s destination is a yellow food-delivery locker beside a glass entrance. Its current subgoal is to follow the building exterior until the locker front becomes visible.</p><p>The policy-action preview approaches the doorway. The reasoner instead selects a rightward movement along the facade. The next real camera observation reveals the exterior walkway and locker front, completing the intermediate subgoal.</p><p class="fine-print">This is an online, closed-loop qualitative case. Predicted rollouts are generated before execution; observed frames come from the robot’s camera. Completing this subgoal does not mean the final destination has been reached.</p></div></div>
+      </div>
+      <p class="figure-help">Select a figure to view it at full size.</p>
+    </section>
+    <section class="method-section section wrap" id="method" aria-labelledby="method-title">
+      <h2 id="method-title">Method</h2>
+      <p class="section-copy">One shared VLM coordinates Navigation Memory and the Predictive Sandbox around a frozen navigation policy. All pretrained model weights remain frozen.</p>
+      <figure class="paper-figure"><a href="assets/method.webp" target="_blank" rel="noopener" aria-label="Open the PreAct-Nav framework figure at full size"><img src="assets/method.webp" width="2600" height="916" loading="lazy" alt="Framework diagram showing a frozen policy, a VLM reasoner, Navigation Memory and the Predictive Sandbox, with a four-stage reasoning and feedback loop."></a><figcaption>Navigation Memory supplies the current subgoal and observed experience. The Predictive Sandbox supplies action-conditioned future visual cues.</figcaption></figure>
+      <ol class="method-steps">
+        <li><span class="step-number">01</span><h3>Action Preview</h3><p>Assess the proposed movement using real observations and memory. Query the sandbox when predicted visual evidence could resolve uncertainty.</p></li>
+        <li><span class="step-number">02</span><h3>Action Review</h3><p>Check the movement against the current subgoal. Revise a contradicted proposal and review the new action within the reasoning budget.</p></li>
+        <li><span class="step-number">03</span><h3>Action Execute</h3><p>Execute a supported action. If no proposal is supported, retain the original policy action.</p></li>
+        <li><span class="step-number">04</span><h3>Memory Update</h3><p>Compare the next real observation with expected cues. Record the outcome and continue or reformulate the subgoal.</p></li>
+      </ol>
+    </section>
+    <section class="results-band" id="results" aria-labelledby="results-title"><div class="section wrap">
+      <h2 id="results-title">Results</h2>
+      <p class="section-copy">We compare reasoning methods under a shared evaluation protocol within each task. UrbanNav uses 4,179 test-seen and 4,634 test-unseen episodes; CityWalker uses 154 routes from nine recordings. Both use a three-metre success radius.</p>
+      <div class="result-controls">
+        <label>Benchmark<select id="benchmark"><option value="urban">UrbanNav</option><option value="city">CityWalker</option></select></label>
+        <label id="reasoner-control">Reasoner<select id="reasoner"><option value="qwen">Qwen3.8-27B</option><option value="gpt">GPT-5.6 Sol</option></select></label>
+        <fieldset id="split-control"><legend>Evaluation split</legend><div class="split-toggle"><button data-split="unseen" aria-pressed="true">Test-unseen</button><button data-split="seen" aria-pressed="false">Test-seen</button></div></fieldset>
+      </div>
+      <div class="results-summary" aria-live="polite" aria-atomic="true">
+        <p class="result-context" id="result-context">PreAct-Nav · UrbanNav · Test-unseen · Qwen3.8-27B</p>
+        <div class="metrics"><div><p class="metric-value"><span id="metric-sr">83.38</span><span>%</span></p><p>Success rate</p></div><div><p class="metric-value"><span id="metric-spl">77.87</span><span>%</span></p><p>SPL</p></div><div><p class="metric-value"><span id="metric-ne">5.34</span><span>m</span></p><p>Navigation error</p></div></div>
+        <p id="result-takeaway" class="result-takeaway"><strong>+5.24 percentage points</strong> in success rate over the frozen UrbanNav policy.</p>
+      </div>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="Benchmark results; scroll horizontally on small screens"><table><caption id="table-caption">UrbanNav comparison · Test-unseen · Qwen3.8-27B</caption><thead><tr><th scope="col">Method</th><th scope="col">SR (%) ↑</th><th scope="col">SPL (%) ↑</th><th scope="col">NE (m) ↓</th><th scope="col">nDTW (%) ↑</th><th scope="col">SDTW (%) ↑</th><th scope="col">OSR (%) ↑</th></tr></thead><tbody id="results-body"><tr><th scope="row">UrbanNav</th><td>78.14</td><td>74.73</td><td>5.9659</td><td>87.73</td><td>76.13</td><td>84.92</td></tr><tr><th scope="row">Direct VLM</th><td>79.05</td><td>75.58</td><td>5.9187</td><td>88.02</td><td>76.99</td><td>85.63</td></tr><tr><th scope="row">NavGPT</th><td>79.11</td><td>75.65</td><td>5.9017</td><td>88.09</td><td>77.06</td><td>85.67</td></tr><tr><th scope="row">Open-Nav</th><td>79.24</td><td>75.77</td><td>5.8964</td><td>88.11</td><td>77.18</td><td>85.74</td></tr><tr><th scope="row">DiscussNav</th><td>78.90</td><td>75.00</td><td>5.8659</td><td>88.19</td><td>76.94</td><td>85.69</td></tr><tr><th scope="row">EvoNav</th><td>78.87</td><td>74.59</td><td>5.8376</td><td>88.16</td><td>76.91</td><td>85.58</td></tr><tr class="ours"><th scope="row">PreAct-Nav</th><td>83.38</td><td>77.87</td><td>5.3353</td><td>90.47</td><td>81.30</td><td>90.12</td></tr></tbody></table></div>
+      <p id="protocol-note" class="fine-print">All methods use the frozen UrbanNav policy. Reasoning methods shown here use Qwen3.8-27B. Values are those reported in the manuscript.</p>
+      <details class="metric-definitions"><summary>Metric definitions</summary><p><strong>SR:</strong> success rate. <strong>SPL:</strong> success weighted by path length. <strong>NE:</strong> final navigation error in metres. <strong>nDTW:</strong> normalized dynamic time warping. <strong>SDTW:</strong> success weighted by nDTW. <strong>OSR:</strong> oracle success rate. Higher is better except for NE.</p></details>
+      <div class="transfer-block"><h3>Transfer across frozen policies</h3><p class="fine-print">Test-unseen on UrbanNav, with Qwen3.8-27B as the shared reasoner. Success-rate gains are measured against each corresponding frozen policy.</p><div class="transfer-grid">
+        <article><h4>UrbanNav</h4><p><span>78.14%</span><span class="to">to</span><strong>83.38%</strong></p><p class="gain">+5.24 percentage points</p></article>
+        <article><h4>NoMaD</h4><p><span>76.33%</span><span class="to">to</span><strong>79.11%</strong></p><p class="gain">+2.78 percentage points</p></article>
+        <article><h4>OmniVLA</h4><p><span>82.65%</span><span class="to">to</span><strong>86.23%</strong></p><p class="gain">+3.58 percentage points</p></article>
+      </div></div>
+      <div class="analysis-block"><h3>Route length and turning</h3><p class="section-copy">The full method improves success rate and reduces navigation error in every reported route interval. Gains in success rate reach 9.60 points on 30–50 m routes and 7.92 points on routes with 360–540° of cumulative turning.</p><figure class="paper-figure"><a href="assets/route-analysis.webp" target="_blank" rel="noopener" aria-label="Open route-length and turning analysis at full size"><img src="assets/route-analysis.webp" width="2600" height="889" loading="lazy" alt="Plots of success-rate improvement and navigation-error reduction over the UrbanNav policy, grouped by route length and cumulative turning."></a><figcaption>Gains over the UrbanNav policy within each route group. Curves show point estimates; the manuscript appendix provides group sizes and the uncertainty protocol.</figcaption></figure></div>
+    </div></section>
+    <section class="section citation-section wrap" id="citation" aria-labelledby="citation-title">
+      <div class="citation-heading"><h2 id="citation-title">Citation</h2><button id="copy-citation" class="copy-button">Copy BibTeX</button></div>
+      <p class="fine-print">Preprint available at <a href="https://arxiv.org/abs/2610.04916" target="_blank" rel="noopener">arXiv:2610.04916</a>.</p>
+      <pre><code id="bibtex">@misc{xie2026preactnav,
+  title  = {PreAct-Nav: Agentic Reasoning Before Action
+            for Urban Navigation},
+  author = {Xie, Jing and Ruan, Shouwei and Wang, Yubin and
+            Zhang, Yuxiang and Yang, Junwei and Jin, Songchang and Shi, Dianxi},
+  year   = {2026},
+  eprint = {2610.04916},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.RO},
+  url    = {https://arxiv.org/abs/2610.04916}
+}</code></pre><p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <footer class="site-footer wrap"><a class="wordmark" href="#top">PreAct<span>-Nav</span></a><p>Agentic reasoning before action for urban navigation.</p><a href="#top">Back to top</a></footer>
+</body>
+</html>
